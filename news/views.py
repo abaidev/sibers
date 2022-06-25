@@ -1,18 +1,18 @@
 from django.shortcuts import render
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.core.paginator import Paginator
 from .models import Post
 
 
-class NewsListView(ListView):
+class PostListView(ListView):
     model = Post
     context_object_name = 'posts'
     template_name = 'news/index.html'
-    paginate_by = 1
+    paginate_by = 10
     ordering = '-id'  # to avoid UnorderedObjectListWarning
 
     def get_context_data(self, *, object_list=None, **kwargs):
-        context = super(NewsListView, self).get_context_data(**kwargs)
+        context = super(PostListView, self).get_context_data(**kwargs)
         context['paglim'] = self.request.session.get("paglim", default=self.paginate_by)
         return context
 
@@ -22,13 +22,9 @@ class NewsListView(ListView):
 
     def get(self, request, *args, **kwargs):
         request.session['paglim'] = self.request.GET.get('paglim', default=self.paginate_by)
-        return super(NewsListView, self).get(request, *args, **kwargs)
+        return super(PostListView, self).get(request, *args, **kwargs)
 
 
-def listing(request):
-    contact_list = Post.objects.all()
-    paginator = Paginator(contact_list, 2)
-
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-    return render(request, 'news/index.html', {'posts': page_obj})
+class PostDetailView(DetailView):
+    model = Post
+    template_name = 'news/post_detail.html'

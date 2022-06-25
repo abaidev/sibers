@@ -1,34 +1,47 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    <h2>Hello folks!</h2>
-    {% for post in posts %}
-        {{ post.title | upper }}<br>
-    {% endfor %}
+<div class="container py-3">
 
-   {% if page_obj.has_other_pages %}
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?paglim={{paglim}}&page=1">&laquo; first</a>
-                <a href="?paglim={{paglim}}&page={{ page_obj.previous_page_number }}">previous</a>
+    <div class="row">
+        <div class="col-3">
+            <form action="" method="GET">
+                <select name="paglim" id="paglimSel">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="50">50</option>
+                </select>
+                <input type="submit" value="Paginate">
+            </form>
+        </div>
+
+        <div class="col-6">
+            {% for post in posts %}
+            {% include 'news/post_card.html' with post=post %}
+            {% endfor %}
+
+            {% if page_obj.has_other_pages %}
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                    <a href="?paglim={{paglim}}&page=1">&laquo; first</a>
+                    <a href="?paglim={{paglim}}&page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        | {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} |
+                    </span>
+
+                    {% if page_obj.has_next %}
+                    <a href="?paglim={{paglim}}&page={{ page_obj.next_page_number }}">next</a>
+                    <a href="?paglim={{paglim}}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
             {% endif %}
 
-            <span class="current">
-                | {{ page_obj.number }} of {{ page_obj.paginator.num_pages }} |
-            </span>
-
-            {% if page_obj.has_next %}
-                <a href="?paglim={{paglim}}&page={{ page_obj.next_page_number }}">next</a>
-                <a href="?paglim={{paglim}}&page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
-        </span>
+        </div>
     </div>
-   {% endif %}
 
-    <form action="" method="GET">
-        <input type="number" name="paglim" id="padId" />
-        <input type="submit" value="submit">
-    </form>
-
+</div>
 {% endblock %}

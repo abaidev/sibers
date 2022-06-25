@@ -1,0 +1,10 @@
+<div class="card mb-4" style="width: 100%">
+    {% if post.image_set.all %}
+    <img src="{{ post.image_set.first.image.url }}" class="card-img-top" alt="...">
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">{{post.title}}</h5>
+        <p class="card-text">{{post.content|safe}}.</p>
+        <a href="{% url 'news:post-detail' post.id %}" class="btn btn-primary">Read</a>
+    </div>
+</div>

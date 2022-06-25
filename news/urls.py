@@ -4,6 +4,6 @@ from . import views
 app_name = 'news'
 
 urlpatterns = [
-    # path('', views.listing, name='feed'),
-    path('', views.NewsListView.as_view(), name='feed'),
+    path('', views.PostListView.as_view(), name='feed'),
+    path('post/<int:pk>/', views.PostDetailView.as_view(), name='post-detail'),
 ]
