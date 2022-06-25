@@ -5,13 +5,24 @@
 
     <div class="row">
         <div class="col-3">
+            <p>Display by:</p>
             <form action="" method="GET">
-                <select name="paglim" id="paglimSel">
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                </select>
-                <input type="submit" value="Paginate">
+                <div class="btn-group" data-toggle="buttons">
+                    {% with '10 20 50' as list %}
+                        {% for i in list.split %}
+                            {% if i == request.session.paglim %}
+                            <label class="btn ">
+                                <input type="radio" name="paglim" id="opt{{i}}" value="{{i}}" checked> {{i}}
+                            </label>
+                            {% else %}
+                            <label class="btn ">
+                                <input type="radio" name="paglim" id="opt{{i}}" value="{{i}}"> {{i}}
+                            </label>
+                            {% endif %}
+                        {% endfor %}
+                    {% endwith %}
+                </div>
+                <input type="submit" value="Paginate" class="btn btn-secondary">
             </form>
         </div>
 
