@@ -5,5 +5,4 @@ echo "Apply database migrations"
 python3 /code/manage.py migrate
 
 echo "DJANGO SERVER starts"
-#python3 /code/manage.py runserver 0.0.0.0:8000
-gunicorn server.wsgi:application --bind 0.0.0.0:8000
+python3 /code/manage.py runserver 0.0.0.0:8000

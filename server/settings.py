@@ -30,7 +30,8 @@ SECRET_KEY = env.str("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool("DEBUG", default=True)
 
-ALLOWED_HOSTS = ['*'] if DEBUG else env.list("ALLOWED_HOSTS")
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0'] if DEBUG else env.list("ALLOWED_HOSTS")
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS")
 
 
 # Application definition
