@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block body %}
+<div class="container py-3 mx-auto col-6">
+    <h5 class="text-center mb-5">Create New Post</h5>
+    <form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+        <div class="mb-3">
+            <label for="post-title" class="form-label fw-bold">Title</label>
+            <input type="text" class="form-control" name="title" id="post-title" required/>
+            {{ form.title.errors | escape}}
+        </div>
+        <div class="mb-3">
+            <label for="post-content" class="form-label fw-bold">Content</label>
+            <textarea class="form-control" name="content" id="post-content" rows="3" required></textarea>
+            {{ form.content.errors | escape}}
+        </div>
+        <div class="mb-3">
+            <label for="post-images" class="form-label fw-bold">Images</label>
+            <input type="file" name="images" accept="image/*" class="form-control" id="post-images" multiple/>
+            {{ form.content.errors | escape}}
+        </div>
+        <input type="submit" value="Create" class="btn btn-primary col-12"/>
+    </form>
+</div>
+{% endblock %}

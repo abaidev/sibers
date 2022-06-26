@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.shortcuts import render, redirect
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, CreateView
 from django.core.paginator import Paginator
-from .models import Post
+from .models import Post, Image
+from .forms import PostForm
 
 
 class PostListView(ListView):
@@ -28,3 +30,17 @@ class PostListView(ListView):
 class PostDetailView(DetailView):
     model = Post
     template_name = 'news/post_detail.html'
+
+
+class PostCreateView(CreateView):
+    model = Post
+    template_name = 'news/post_create.html'
+    form_class = PostForm
+
+    def post(self, request, *args, **kwargs):
+        pf = self.form_class(request.POST)
+        post_obj = pf.save()
+        for image in request.FILES.getlist('images'):
+            Image.objects.create(image=image, post=post_obj)
+        return redirect(reverse('news:post-detail', kwargs={'pk':post_obj.id}))
+
