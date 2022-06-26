@@ -13,7 +13,7 @@
             <div class="card mb-4" style="width: 100%">
                 {% if post.image_set.all %}
                 <div id="carousel-{{post.id}}" class="carousel slide carousel-fade" data-bs-ride="carousel"
-                     data-bs-interval="false">
+                     data-bs-interval="false" data-bs-touch="true">
                     <div class="carousel-indicators">
                         {% for pi in post.image_set.all %}
                         {% if forloop.counter0 == 0 %}

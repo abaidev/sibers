@@ -13,9 +13,9 @@ class PostListView(ListView):
     paginate_by = 10
     ordering = '-id'  # to avoid UnorderedObjectListWarning
 
-    def get_context_data(self, *, object_list=None, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super(PostListView, self).get_context_data(**kwargs)
-        context['paglim'] = self.request.session.get("paglim", default=self.paginate_by)
+        context['paglim'] = str(self.request.session.get("paglim", default=self.paginate_by))
         return context
 
     def get_paginate_by(self, queryset):
