@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block body %}
+<div class="container py-3 col-8 mx-auto">
+    <h6>Results for your search:</h6>
+    {% if posts %}
+        {% for post in posts %}
+            {% include 'news/post_card.html' with post=post %}
+        {% endfor %}
+    {% else %}
+        <p>Unfortunately no Post with such title was ever published</p>
+    {% endif %}
+</div>
+{% endblock %}

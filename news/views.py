@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, CreateView
-from django.core.paginator import Paginator
+from django.db.models import Q
 from .models import Post, Image
 from .forms import PostForm
 
@@ -44,3 +44,13 @@ class PostCreateView(CreateView):
             Image.objects.create(image=image, post=post_obj)
         return redirect(reverse('news:post-detail', kwargs={'pk':post_obj.id}))
 
+
+class PostSearchView(ListView):
+    model = Post
+    context_object_name = 'posts'
+    template_name = 'news/search_results.html'
+
+    def get_queryset(self):
+        sf = self.request.GET.get('lookup')
+        qs = Post.objects.filter(Q(title__icontains=sf))
+        return qs
